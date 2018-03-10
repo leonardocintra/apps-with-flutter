@@ -6,6 +6,7 @@ class LandingPage extends StatelessWidget {
     return new Material(
       color: Colors.greenAccent,
       child: new InkWell(
+        onTap: () => print('Nos aparteamos page!'),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
