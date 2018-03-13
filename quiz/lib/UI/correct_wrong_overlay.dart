@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class CorrectWrongOverlay extends StatefulWidget {
 
   final bool _isCorrect;
+  final VoidCallback _onTap;
 
-  CorrectWrongOverlay(this._isCorrect);
+  CorrectWrongOverlay(this._isCorrect, this._onTap);
 
   @override
   State createState() => new CorrectWrongOverlayState();
@@ -30,7 +31,7 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTic
     return new Material(
       color: Colors.black54,
       child: new InkWell(
-        onTap: () => print("voce apertou overlay"),
+        onTap: () => widget._onTap(),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -41,7 +42,7 @@ class CorrectWrongOverlayState extends State<CorrectWrongOverlay> with SingleTic
               ),
               child: new Transform.rotate(
                 angle: _iconAnimation.value * 2 * PI,
-                child: new Icon(widget._isCorrect == true ? Icons.done : Icons.clear, size: _iconAnimation.value * 80.0,),
+                child: new Icon(widget._isCorrect == true ? Icons.done : Icons.clear, size: 80.0,),
               ),
             ),
             new Padding(

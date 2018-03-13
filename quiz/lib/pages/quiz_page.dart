@@ -13,6 +13,40 @@ class QuizPage extends StatefulWidget {
 }
 
 class QuizPageState extends State<QuizPage> {
+
+  Question currentQuestion;
+  Quiz quiz = new Quiz([
+    new Question('Elon Musk é um ser humano', false),
+    new Question('Pizza é muito gostosa', true),
+    new Question('Pizza é muito ruim', false),
+    new Question('Fluter é incrivel', true),
+    new Question('Sidney é capital da Australia', false),
+    new Question('Titanic foi feito em 1999', false),
+    new Question('Lula é corrupto', true),
+
+  ]);
+
+  String questionText;
+  int questionNumber;
+  bool isCorrect;
+  bool overlayShouldBeVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    currentQuestion = quiz.nextQuestion;
+    questionText = currentQuestion.question;
+    questionNumber = quiz.questionNumber;
+  }
+
+  void handleAnswer(bool answer){
+    isCorrect = (currentQuestion.answer == answer);
+    quiz.answer(isCorrect);
+    this.setState(() {
+      overlayShouldBeVisible = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Stack(
@@ -20,12 +54,22 @@ class QuizPageState extends State<QuizPage> {
       children: <Widget>[
         new Column(
           children: <Widget>[
-            new AnswerButton(true, () => print("Sua resposta esta certa!")),
-            new QuestionText("Dois mais tres é cinco?", 1),
-            new AnswerButton(false, () => print("Sua resposta esta errada!")),
+            new AnswerButton(true, () => handleAnswer(true)),
+            new QuestionText(questionText, questionNumber),
+            new AnswerButton(false, () => handleAnswer(false)),
           ],
         ),
-        new CorrectWrongOverlay(false),
+        overlayShouldBeVisible == true ? new CorrectWrongOverlay(
+          isCorrect,
+          () {
+            currentQuestion = quiz.nextQuestion;
+            this.setState(() {
+              overlayShouldBeVisible = false;
+              questionText = currentQuestion.question;
+              questionNumber = quiz.questionNumber;
+            });
+          }
+        ) : new Container()
       ],
     );
   }
