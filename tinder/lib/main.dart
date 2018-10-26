@@ -63,7 +63,44 @@ class _MyHomePageState extends State<MyHomePage> {
       child: new Padding(
         padding: const EdgeInsets.all(16.0),
         child: new Row(
-          children: <Widget>[],
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            new RoundIconButton.small(
+              icon: Icons.refresh,
+              iconColor: Colors.orange,
+              onPressed: () {
+                // TODO:
+              },
+            ),
+            new RoundIconButton.large(
+              icon: Icons.clear,
+              iconColor: Colors.red,
+              onPressed: () {
+                // TODO:
+              },
+            ),
+            new RoundIconButton.small(
+              icon: Icons.star,
+              iconColor: Colors.blue,
+              onPressed: () {
+                // TODO:
+              },
+            ),
+            new RoundIconButton.large(
+              icon: Icons.favorite,
+              iconColor: Colors.green,
+              onPressed: () {
+                // TODO:
+              },
+            ),
+            new RoundIconButton.small(
+              icon: Icons.lock,
+              iconColor: Colors.purple,
+              onPressed: () {
+                // TODO:
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -79,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class RoundIconButton extends StatefulWidget {
+class RoundIconButton extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final double size;
@@ -87,19 +124,30 @@ class RoundIconButton extends StatefulWidget {
 
   RoundIconButton.large({this.icon, this.iconColor, this.onPressed})
       : size = 60.0;
-  
+
   RoundIconButton.small({this.icon, this.iconColor, this.onPressed})
       : size = 50.0;
 
-  RoundIconButton({this.icon, this.iconColor, this.size, this.onPressed})
+  RoundIconButton({this.icon, this.iconColor, this.size, this.onPressed});
 
-  @override
-  _RoundIconButtonState createState() => _RoundIconButtonState();
-}
-
-class _RoundIconButtonState extends State<RoundIconButton> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return new Container(
+      width: size,
+      height: size,
+      decoration: new BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.white,
+        boxShadow: [
+          new BoxShadow(color: const Color(0x11000000), blurRadius: 10.0)
+        ],
+      ),
+      child: new RawMaterialButton(
+        shape: new CircleBorder(),
+        elevation: 0.0,
+        child: new Icon(icon, color: iconColor),
+        onPressed: onPressed,
+      ),
+    );
   }
 }
