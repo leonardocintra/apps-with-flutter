@@ -1,6 +1,6 @@
-# contador_de_pessoas
+# Contador de pessoas
 
-A new Flutter project.
+Simples projeto em flutter para contador de pessoas
 
 ## Getting Started
 
