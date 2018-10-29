@@ -1,6 +1,6 @@
-# conversor_moedas
+# Converor de Moedas
 
-A new Flutter project.
+Converter moedas Reais, Dolar e Euro
 
 ## Getting Started
 
