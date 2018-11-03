@@ -21,20 +21,41 @@ class _HomeState extends State<Home> {
   final realController = TextEditingController();
   final dolarController = TextEditingController();
   final euroController = TextEditingController();
+  final bitcoinController = TextEditingController();
 
   double dolar;
   double euro;
+  double bitcoin;
+
+  int fractionDigits = 2;
 
   void _realChanged(String text) {
-    print(text);
+    double real = double.parse(text);
+    dolarController.text = (real / dolar).toStringAsFixed(fractionDigits);
+    euroController.text = (real / euro).toStringAsFixed(fractionDigits);
+    bitcoinController.text = (real / bitcoin).toStringAsFixed(fractionDigits);
   }
 
   void _dolarChanged(String text) {
-    print(text);
+    double dolar = double.parse(text);
+    // para pegar a variavel dolar de cima deveria ser this.dolar
+    realController.text = (dolar * this.dolar).toStringAsFixed(fractionDigits);
+    euroController.text = (dolar * this.dolar / euro).toStringAsFixed(fractionDigits);
+    bitcoinController.text = (dolar * this.dolar / bitcoin).toStringAsFixed(fractionDigits);
   }
 
   void _euroChanged(String text) {
-    print(text);
+    double euro = double.parse(text);
+    realController.text = (euro * this.euro).toStringAsFixed(fractionDigits);
+    dolarController.text = (euro * this.euro / dolar).toStringAsFixed(fractionDigits);
+    bitcoinController.text = (euro * this.euro / bitcoin).toStringAsFixed(fractionDigits);
+  }
+
+  void _bitcoinChanged(String text) {
+    double bitcoin = double.parse(text);
+    realController.text = (bitcoin * this.bitcoin).toStringAsFixed(fractionDigits);
+    dolarController.text = (bitcoin * this.bitcoin / dolar).toStringAsFixed(fractionDigits);
+    euroController.text = (bitcoin * this.bitcoin / euro).toStringAsFixed(fractionDigits);
   }
 
   @override
@@ -71,6 +92,7 @@ class _HomeState extends State<Home> {
               } else {
                 dolar = snapshot.data["results"]["currencies"]["USD"]["buy"];
                 euro = snapshot.data["results"]["currencies"]["EUR"]["buy"];
+                bitcoin = snapshot.data["results"]["currencies"]["BTC"]["buy"];
                 return SingleChildScrollView(
                   padding: EdgeInsets.all(10.0),
                   child: Column(
@@ -82,13 +104,16 @@ class _HomeState extends State<Home> {
                         color: Colors.amber,
                       ),
                       buildTextField(
-                          "Reais", "R\$", realController, _realChanged),
+                          "Reais", "R\$ ", realController, _realChanged),
                       Divider(),
                       buildTextField(
-                          "Dólares", "U\$\$", dolarController, _dolarChanged),
+                          "Dólares", "U\$\$ ", dolarController, _dolarChanged),
                       Divider(),
                       buildTextField(
-                          "Euros", "€", euroController, _euroChanged),
+                          "Euros", "€ ", euroController, _euroChanged),
+                      Divider(),
+                      buildTextField(
+                          "BitCoin", "Ƀ ", bitcoinController, _bitcoinChanged),
                     ],
                   ),
                 );
