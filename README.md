@@ -13,3 +13,4 @@ For help getting started with Flutter, view our online
 - :bulb: [Propor nome](https://github.com/leonardocintra/apps-with-flutter/tree/master/propornome)
 - :interrobang: [Quiz](https://github.com/leonardocintra/apps-with-flutter/tree/master/quiz)
 - :heavy_check_mark: [Lista de Tarefas](https://github.com/leonardocintra/apps-with-flutter/tree/master/lista_de_tarefas)
+- :heart_eyes: [Buscador de Gifs](https://github.com/leonardocintra/apps-with-flutter/tree/master/buscador_gifs)
