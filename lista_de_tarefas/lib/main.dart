@@ -34,6 +34,24 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Future<Null> _ordenarListaNaoConcluidosPrimeiro() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    setState(() {
+      _toDoList.sort((a, b) {
+        if (a["done"] && !b["done"]) {
+          return 1;
+        } else if (!a["done"] && b["done"]) {
+          return -1;
+        } else {
+          return 0;
+        }
+        _saveData();
+      });
+      return null;
+    });
+  }
+
   void _addToDo() {
     setState(() {
       Map<String, dynamic> newToDo = Map();
@@ -104,7 +122,7 @@ class _HomeState extends State<Home> {
 
           final snack = SnackBar(
             content: Text("Tarefa ${_lastRemoved['title']} removida!"),
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 2),
             action: SnackBarAction(
               label: "Desfazer",
               onPressed: () {
@@ -153,10 +171,13 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.only(top: 10.0),
-              itemCount: _toDoList.length,
-              itemBuilder: _buildItem,
+            child: RefreshIndicator(
+              onRefresh: _ordenarListaNaoConcluidosPrimeiro,
+              child: ListView.builder(
+                padding: EdgeInsets.only(top: 10.0),
+                itemCount: _toDoList.length,
+                itemBuilder: _buildItem,
+              ),
             ),
           )
         ],
