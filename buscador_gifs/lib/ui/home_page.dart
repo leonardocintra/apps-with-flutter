@@ -2,6 +2,7 @@ import 'package:buscador_gifs/ui/gif_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:share/share.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'dart:convert';
 
 class HomePage extends StatefulWidget {
@@ -53,10 +54,11 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         if (_search == null || index < snapshot.data["data"].length) {
           return GestureDetector(
-            child: Image.network(
-              snapshot.data["data"][index]["images"]["fixed_height"]["url"],
+            child: FadeInImage.memoryNetwork(
+              image: snapshot.data["data"][index]["images"]["fixed_height"]["url"],
               height: 300.0,
               fit: BoxFit.cover,
+              placeholder: kTransparentImage,
             ),
             onTap: () {
               Navigator.push(
