@@ -56,6 +56,10 @@ class ContactHelper {
       return null;
     }
   }
+
+  deleteContact(int id) {
+    
+  }
 }
 
 class Contact {
