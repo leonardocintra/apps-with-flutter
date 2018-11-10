@@ -15,3 +15,4 @@ For help getting started with Flutter, view our online
 - :heavy_check_mark: [Lista de Tarefas](https://github.com/leonardocintra/apps-with-flutter/tree/master/lista_de_tarefas)
 - :heart_eyes: [Buscador de Gifs](https://github.com/leonardocintra/apps-with-flutter/tree/master/buscador_gifs)
 - :owl: [Pokemon](https://github.com/leonardocintra/apps-with-flutter/tree/master/pokemon)
+- :person: [Agenda de Contatos](https://github.com/leonardocintra/apps-with-flutter/tree/master/agenda_contatos)
