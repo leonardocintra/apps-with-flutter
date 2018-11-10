@@ -1,5 +1,8 @@
+import 'package:agenda_contatos/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp());
+  runApp(MaterialApp(
+    home: HomePage(),
+  ));
 }
