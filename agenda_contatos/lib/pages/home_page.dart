@@ -17,7 +17,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _getAllContacts();
+  }
 
+  void _getAllContacts() {
     helper.getAllContact().then((list) {
       setState(() {
         contacts = list;
@@ -25,12 +28,21 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _showContactPage({Contact contact}) {
-    Navigator.push(
+  void _showContactPage({Contact contact}) async {
+    final _returnContact = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => ContactPage(contact: contact),
         ));
+
+    if (_returnContact != null) {
+      if (contact != null) {
+        await helper.updateContact(_returnContact);
+      } else {
+        await helper.saveContact(_returnContact);
+      }
+      _getAllContacts();
+    }
   }
 
   Widget _contactCard(BuildContext context, int index) {
@@ -46,10 +58,9 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: contacts[index].img != null
-                        ? FileImage(File(contacts[index].img))
-                        : AssetImage("images/person.jpg"),
-                  ),
+                      image: contacts[index].img == null
+                          ? AssetImage("images/person.jpg")
+                          : FileImage(File(contacts[index].img))),
                 ),
               ),
               Padding(
