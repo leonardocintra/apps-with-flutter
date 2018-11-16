@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agenda_contatos/helpers/contact_helpers.dart';
+import 'package:agenda_contatos/pages/contact_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +25,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _showContactPage({Contact contact}) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ContactPage(contact: contact),
+        ));
+  }
+
   Widget _contactCard(BuildContext context, int index) {
     return GestureDetector(
       child: Card(
@@ -35,11 +44,13 @@ class _HomePageState extends State<HomePage> {
                 width: 80.0,
                 height: 80.0,
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: contacts[index].img != null
-                            ? AssetImage("images/person.jpg") //FileImage(File(contacts[index].img))
-                            : AssetImage("images/person.jpg"))),
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: contacts[index].img != null
+                        ? FileImage(File(contacts[index].img))
+                        : AssetImage("images/person.jpg"),
+                  ),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
@@ -66,6 +77,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      onTap: () {
+        _showContactPage(contact: contacts[index]);
+      },
     );
   }
 
@@ -79,7 +93,9 @@ class _HomePageState extends State<HomePage> {
       ),
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _showContactPage();
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
       ),
