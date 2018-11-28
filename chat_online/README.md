@@ -1,6 +1,8 @@
-# chat_online
+# Chat On-line
 
-A new Flutter project.
+Aplicativo de bate papo
+- Firebase
+- Google Sign -in
 
 ## Getting Started
 
