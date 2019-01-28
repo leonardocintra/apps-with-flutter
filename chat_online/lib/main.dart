@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() {
   Firestore.instance
@@ -20,6 +22,32 @@ final ThemeData kDefaultTheme = ThemeData(
   primarySwatch: Colors.purple,
   accentColor: Colors.orangeAccent[400],
 );
+
+final googleSingIn = GoogleSignIn();
+final auth = FirebaseAuth.instance;
+
+Future<Null>_ensureLoggedIn() async {
+  GoogleSignInAccount user = googleSingIn.currentUser;  
+
+  if (user == null) {
+    await googleSingIn.signInSilently();
+  }
+
+  // se mesmo assim nao coseguir logar
+  if (user == null) {
+    await googleSingIn.signIn();
+  }
+
+  // nao basta ficar so logado no google, tem que logar no firebase tbm
+  if (await auth.currentUser() == null) {
+    GoogleSignInAuthentication credentials = await googleSingIn.currentUser.authentication;
+    await auth.signInWithGoogle(
+      idToken: credentials.idToken,
+      accessToken: credentials.accessToken
+    );
+  }
+}
+
 
 class HomePage extends StatelessWidget {
   @override
