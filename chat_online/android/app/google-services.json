@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "841647233952-a9ahlt86jvupdpsgaj8hhga8s9kevo8r.apps.googleusercontent.com",
+          "client_id": "841647233952-9phce3vavjh877rmc25n8611clmi76su.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.chatonline",
-            "certificate_hash": "87bc3c74f6df02affdb5252e66577327fbd87762"
+            "certificate_hash": "a071fd8bd83ce1330dbcdeff622117652dc43b40"
           }
         },
         {

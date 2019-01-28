@@ -8,7 +8,7 @@ void main() {
   Firestore.instance
       .collection("mensagens")
       .document()
-      .setData({"from": "Joao Marcos", "texto": "To sim e aew ?"});
+      .setData({"from": "Cleonice Rodrigues", "texto": "To sim e aew ??"});
 
   runApp(HomePage());
 }
@@ -26,8 +26,8 @@ final ThemeData kDefaultTheme = ThemeData(
 final googleSingIn = GoogleSignIn();
 final auth = FirebaseAuth.instance;
 
-Future<Null>_ensureLoggedIn() async {
-  GoogleSignInAccount user = googleSingIn.currentUser;  
+Future<Null> _ensureLoggedIn() async {
+  GoogleSignInAccount user = googleSingIn.currentUser;
 
   if (user == null) {
     await googleSingIn.signInSilently();
@@ -40,14 +40,26 @@ Future<Null>_ensureLoggedIn() async {
 
   // nao basta ficar so logado no google, tem que logar no firebase tbm
   if (await auth.currentUser() == null) {
-    GoogleSignInAuthentication credentials = await googleSingIn.currentUser.authentication;
+    GoogleSignInAuthentication credentials =
+        await googleSingIn.currentUser.authentication;
     await auth.signInWithGoogle(
-      idToken: credentials.idToken,
-      accessToken: credentials.accessToken
-    );
+        idToken: credentials.idToken, accessToken: credentials.accessToken);
   }
 }
 
+_handleSubmitted(String text) async {
+  await _ensureLoggedIn();
+  _sendMessage(text: text);
+}
+
+void _sendMessage({String text, String imageUrl}) {
+  Firestore.instance.collection("messages").add({
+    "text": text,
+    "imgUrl": imageUrl,
+    "senderName": googleSingIn.currentUser.displayName,
+    "senderPhotoUrl": googleSingIn.currentUser.photoUrl
+  });
+}
 
 class HomePage extends StatelessWidget {
   @override
@@ -114,7 +126,15 @@ class TextComposer extends StatefulWidget {
 }
 
 class _TextComposerState extends State<TextComposer> {
+  final _textController = TextEditingController();
   bool _isComposing = false;
+
+  void _reset() {
+    _textController.clear();
+    setState(() {
+      _isComposing = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,12 +156,17 @@ class _TextComposerState extends State<TextComposer> {
             ),
             Expanded(
               child: TextField(
+                controller: _textController,
                 decoration:
                     InputDecoration.collapsed(hintText: "Enviar mensagem"),
                 onChanged: (text) {
                   setState(() {
                     _isComposing = text.length > 0;
                   });
+                },
+                onSubmitted: (text) {
+                  _handleSubmitted(text);
+                  _reset();
                 },
               ),
             ),
@@ -150,10 +175,20 @@ class _TextComposerState extends State<TextComposer> {
                 child: Theme.of(context).platform == TargetPlatform.iOS
                     ? CupertinoButton(
                         child: Text("Enviar"),
-                        onPressed: _isComposing ? () {} : null)
+                        onPressed: _isComposing
+                            ? () {
+                                _handleSubmitted(_textController.text);
+                                _reset();
+                              }
+                            : null)
                     : IconButton(
                         icon: Icon(Icons.send),
-                        onPressed: _isComposing ? () {} : null,
+                        onPressed: _isComposing
+                            ? () {
+                                _handleSubmitted(_textController.text);
+                                _reset();
+                              }
+                            : null,
                       )),
           ],
         ),
