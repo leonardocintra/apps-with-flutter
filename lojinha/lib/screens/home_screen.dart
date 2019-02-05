@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lojinha/pages/home_page.dart';
 
 class HomeScreen extends StatelessWidget {
   final _pageController = PageController();
@@ -8,14 +9,7 @@ class HomeScreen extends StatelessWidget {
     return PageView(
       controller: _pageController,
       physics: NeverScrollableScrollPhysics(),
-      children: <Widget>[
-        Container(
-          color: Colors.yellow,
-        ),
-        Container(
-          color: Colors.red,
-        )
-      ],
+      children: <Widget>[HomePage()],
     );
   }
 }
