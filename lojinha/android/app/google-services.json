@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1017856530484",
+    "firebase_url": "https://lojinha-da-ju.firebaseio.com",
+    "project_id": "lojinha-da-ju",
+    "storage_bucket": "lojinha-da-ju.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017856530484:android:fa2bcb2fd3894ed6",
+        "android_client_info": {
+          "package_name": "com.example.lojinha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017856530484-qhsoa2cnnodahvkb3v8e19fck694pumb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3DWihw6SvBi9Q78WYan87YHFsMTl4BCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
